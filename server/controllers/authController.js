@@ -18,7 +18,7 @@ async function registerUser(req, res) {
 
   // If user is found, send message that user exists
   if (foundUser[0]) {
-    res.status(200).json("User already exists.")
+    res.status(401).json("User already exists.")
     // Otherwise, create a new user
   } else {
     const salt = await bcrypt.genSaltSync(10);
@@ -44,7 +44,7 @@ async function loginUser(req, res) {
 
   // Check if user exists
   const foundUser = await db.auth.checkForUsername(username)
-  
+
   // If user is not found, then send message saying so
   if (!foundUser[0]) {
     res.status(400).json("No user found.")
